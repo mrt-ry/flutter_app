@@ -1,71 +1,82 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(new MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  const MyApp({Key? key}) : super(key: key);
-  final title = "Flutter Sample！";
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Flutter Demo",
-      home: MyHomePage(title: this.title),
+    return new MaterialApp(
+      title: 'Generated App',
+      theme: new ThemeData(
+        primarySwatch: Colors.pink,
+        primaryColor: const Color(0xFFe91e63),
+        canvasColor: const Color(0xFFfafafa),
+      ),
+      home: new MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
+  MyHomePage({Key? key}) : super(key: key);
   @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class Data {
-  int _price;
-  String _name;
-  Data(this._name, this._price) : super();
-
-  @override
-  String toString() {
-    return _name + ":" + _price.toString() + "円";
-  }
+  _MyHomePageState createState() => new _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static final _data = [
-    Data("Apple", 200),
-    Data("Banana", 100),
-    Data("Orange", 150),
-  ];
-
-  Data _item = _data[0];
-
-  void _setData() {
-    setState(() {
-      _item = (_data..shuffle()).first;
-    });
-  }
+  static var _message = "ok";
+  static final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Set Data"),
+    return new Scaffold(
+        appBar: new AppBar(
+          title: new Text('App Name'),
         ),
-        body: Text(
-          _item.toString(),
-          style: const TextStyle(fontSize: 32),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _setData,
-          tooltip: 'set message',
-          child: const Icon(Icons.star),
-        ));
+        body: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                _message,
+                style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Roboto"),
+              ),
+            ),
+            Padding(
+                padding: EdgeInsets.all(10),
+                child: TextField(
+                  controller: _controller,
+                  style: TextStyle(
+                      fontSize: 28,
+                      color: const Color(0xffFF0000),
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "Roboto"),
+                )),
+            ElevatedButton(
+                child: Text(
+                  "Push me",
+                  style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "Roboto"),
+                ),
+                onPressed: buttonPressed)
+          ],
+        )));
+  }
+
+  void buttonPressed() {
+    setState(() {
+      _message = "you said:" + _controller.text;
+    });
   }
 }
